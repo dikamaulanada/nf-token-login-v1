@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#09090b">
+  <link rel="icon" type="image/png" href="assets/nf.png">
+  <link rel="apple-touch-icon" href="assets/nf.png">
   <title>Nf Access — Pilih Perangkat</title>
   <style>
     :root{
@@ -24,12 +26,11 @@
     .app{width:min(100%,520px);margin:clamp(10px,4vh,42px) auto 0}
 
     .topbar{display:flex;align-items:center;justify-content:space-between;margin:0 4px 18px}
-    .brand{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800;letter-spacing:-.02em}
+    .brand{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:800;letter-spacing:-.02em}
     .brand-logo{
-      width:31px;height:31px;border-radius:9px;display:grid;place-items:center;
-      background:linear-gradient(145deg,var(--red2),#b20710);box-shadow:0 7px 22px rgba(229,9,20,.28)
+      flex:none;width:44px;height:44px;border-radius:12px;display:block;overflow:hidden
     }
-    .brand-logo svg{width:15px;height:15px}
+    .brand-logo img{width:100%;height:100%;display:block;object-fit:cover}
     .secure{display:flex;align-items:center;gap:6px;color:#777780;font-size:11px;font-weight:700}
     .secure svg{width:13px;height:13px}
 
@@ -49,20 +50,22 @@
     .progress-line{height:1px;flex:1;background:#28282f}
 
     .clear-box{
-      position:relative;padding:17px;border:1px solid #33333b;border-radius:19px;
-      background:linear-gradient(145deg,#1a1a20,#151519);margin-bottom:13px
+      position:relative;padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:19px;
+      background:#18181d;margin-bottom:13px
     }
-    .clear-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
-    .clear-icon{flex:0 0 39px;width:39px;height:39px;border-radius:12px;display:grid;place-items:center;background:rgba(229,9,20,.12);color:#ff5360}
-    .clear-icon svg{width:20px;height:20px}
-    .clear-title{font-size:14px;font-weight:850;margin:1px 0 4px}
-    .clear-text{font-size:12px;color:var(--muted);line-height:1.5}
+    .clear-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+    .clear-head>div:last-child{min-width:0}
+    .clear-icon{flex:0 0 38px;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:rgba(229,9,20,.12);color:#ff5962}
+    .clear-icon svg{width:19px;height:19px}
+    .clear-title{font-size:15px;font-weight:700;letter-spacing:-.01em;margin:0 0 4px}
+    .clear-text{font-size:12.5px;color:#b4b4bd;line-height:1.5}
     .clear-btn{
-      width:100%;border:0;border-radius:13px;padding:13px 15px;display:flex;align-items:center;justify-content:center;gap:8px;
-      color:#fff;background:linear-gradient(180deg,var(--red2),var(--red));font-weight:850;font-size:13px;cursor:pointer;
-      box-shadow:0 10px 24px rgba(229,9,20,.18);transition:transform .16s ease,filter .16s ease
+      width:100%;height:44px;border:0;border-radius:13px;padding:0 15px;display:flex;align-items:center;justify-content:center;gap:8px;
+      color:#fff;background:#e50914;font-weight:700;font-size:13.5px;cursor:pointer;
+      box-shadow:none;transition:transform .16s ease,background-color .16s ease
     }
-    .clear-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+    .clear-btn:hover{background:#f1121d;transform:translateY(-1px)}
+    .clear-btn:focus-visible{outline:2px solid rgba(255,255,255,.9);outline-offset:3px}
     .clear-btn.done{background:#173b25;color:#8ff0ad;box-shadow:none;border:1px solid #245b38}
     .clear-btn svg{width:16px;height:16px}
 
@@ -72,6 +75,7 @@
     .lock-label.ready{color:#59cf7e}.lock-label svg{width:12px;height:12px}
 
     .device-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .device:last-child:nth-child(odd){grid-column:1/-1}
     .device{
       position:relative;min-height:116px;padding:14px;border:1px solid var(--line);border-radius:17px;background:#17171c;color:var(--text);
       text-align:left;cursor:pointer;transition:transform .16s ease,border-color .16s ease,background .16s ease
@@ -131,93 +135,84 @@
     }
 
     .card{
+      display:grid;
+      min-height:min(450px,calc(100dvh - 58px));
       max-height:calc(100dvh - 58px);
     }
 
     .content{
-      padding:clamp(16px,2.4vw,24px);
+      padding:clamp(20px,3vw,30px);
+      display:grid;
+      min-height:0;
     }
 
     .home{
       display:grid;
       grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
-      gap:clamp(18px,3vw,34px);
-      align-items:center;
+      gap:clamp(24px,3.5vw,40px);
+      align-items:stretch;
     }
 
     .home-left,
     .home-right{
       min-width:0;
+      display:flex;
+      flex-direction:column;
     }
 
-    .eyebrow{margin-bottom:7px}
+    .eyebrow{font-size:12px;margin-bottom:8px}
     h1{
-      font-size:clamp(29px,4.2vw,42px);
-      margin-bottom:8px;
+      font-size:clamp(32px,4.4vw,44px);
+      margin-bottom:10px;
     }
     .desc{
-      margin-bottom:15px;
-      font-size:13px;
+      margin-bottom:18px;
+      font-size:14px;
       line-height:1.5;
     }
 
     .progress{
-      margin-bottom:14px;
+      margin-bottom:17px;
     }
 
     .clear-box{
       margin-bottom:0;
-      padding:14px;
-    }
-
-    .clear-head{
-      margin-bottom:11px;
-    }
-
-    .clear-icon{
-      flex-basis:36px;
-      width:36px;
-      height:36px;
-    }
-
-    .clear-text{
-      line-height:1.4;
-    }
-
-    .clear-btn{
-      padding:11px 13px;
     }
 
     .section-label{
-      margin:0 2px 10px;
+      margin:0 2px 12px;
     }
 
     .device-list{
+      flex:1;
       grid-template-columns:1fr 1fr;
-      gap:9px;
+      grid-auto-rows:1fr;
+      gap:11px;
     }
 
     .device{
-      min-height:101px;
-      padding:12px;
+      min-height:clamp(108px,15vh,118px);
+      padding:14px;
+      text-align:center;
     }
 
     .device-icon{
-      width:34px;
-      height:34px;
-      margin-bottom:10px;
+      width:37px;
+      height:37px;
+      margin:0 auto 11px;
     }
 
-    .device-title{font-size:12px}
-    .device-sub{font-size:9.5px}
+    .device-title{font-size:13px}
+    .device-sub{font-size:10px;padding-right:0}
 
     .status{
-      margin-top:9px;
+      margin-top:11px;
+      font-size:11px;
     }
 
     .hint{
-      margin-top:8px;
-      padding:8px 10px;
+      margin-top:10px;
+      padding:10px 12px;
       line-height:1.35;
     }
 
@@ -274,18 +269,18 @@
       body{padding:8px}
       .app{max-height:calc(100dvh - 16px)}
       .topbar{margin-bottom:7px}
-      .brand-logo{width:27px;height:27px}
+      .brand-logo{width:40px;height:40px}
       .card{max-height:calc(100dvh - 46px)}
       .content{padding:14px 16px}
       h1{font-size:30px}
       .desc{font-size:11.5px;margin-bottom:10px}
       .progress{margin-bottom:10px}
-      .clear-box{padding:11px}
-      .clear-head{margin-bottom:8px}
-      .clear-icon{width:31px;height:31px;flex-basis:31px}
-      .clear-title{font-size:12.5px}
-      .clear-text{font-size:10px}
-      .clear-btn{padding:9px 11px;font-size:11.5px}
+      .clear-box{padding:15px}
+      .clear-head{margin-bottom:12px}
+      .clear-icon{width:34px;height:34px;flex-basis:34px}
+      .clear-title{font-size:14px}
+      .clear-text{font-size:11.5px}
+      .clear-btn{height:40px;padding:0 12px;font-size:12.5px}
       .device{min-height:82px;padding:10px}
       .device-icon{width:29px;height:29px;margin-bottom:7px}
       .device-icon svg{width:17px;height:17px}
@@ -316,8 +311,8 @@
       }
 
       .brand-logo{
-        width:27px;
-        height:27px;
+        width:40px;
+        height:40px;
       }
 
       .secure{
@@ -325,6 +320,7 @@
       }
 
       .card{
+        min-height:0;
         max-height:calc(100dvh - 44px);
         border-radius:20px;
       }
@@ -367,39 +363,40 @@
       }
 
       .clear-box{
-        padding:9px;
+        padding:16px;
       }
 
       .clear-head{
-        gap:8px;
-        margin-bottom:7px;
+        gap:10px;
+        margin-bottom:12px;
       }
 
       .clear-icon{
-        width:29px;
-        height:29px;
-        flex-basis:29px;
-        border-radius:9px;
+        width:36px;
+        height:36px;
+        flex-basis:36px;
+        border-radius:10px;
       }
 
       .clear-icon svg{
-        width:16px;
-        height:16px;
+        width:18px;
+        height:18px;
       }
 
       .clear-title{
-        font-size:11.5px;
-        margin-bottom:2px;
+        font-size:14px;
+        margin-bottom:3px;
       }
 
       .clear-text{
-        font-size:9px;
-        line-height:1.3;
+        font-size:11.5px;
+        line-height:1.45;
       }
 
       .clear-btn{
-        padding:9px 10px;
-        font-size:10.5px;
+        height:40px;
+        padding:0 12px;
+        font-size:12.5px;
       }
 
       .section-label{
@@ -533,7 +530,7 @@
 <main class="app">
   <div class="topbar">
     <div class="brand">
-      <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4v16M17 4v16M7 4l10 16M17 4L7 20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      <span class="brand-logo" aria-hidden="true"><img src="assets/nf.png" alt="" width="44" height="44"></span>
       Nf Access
     </div>
     <div class="secure"><svg viewBox="0 0 24 24" fill="none"><path d="M7 10V8a5 5 0 0110 0v2m-11 0h12v10H6V10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> Panduan akses</div>
@@ -591,11 +588,6 @@
             <span class="device-title">iPhone / iPad</span><span class="device-sub">iOS dan iPadOS</span>
             <span class="device-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
           </button>
-          <button class="device" data-guide="tv" type="button" disabled>
-            <span class="device-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="m9 3 3 3 3-3M9 21h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-            <span class="device-title">Smart TV</span><span class="device-sub">TV dan streaming device</span>
-            <span class="device-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-          </button>
         </div>
 
         <p class="status" id="status">Menyiapkan link akses...</p>
@@ -631,14 +623,12 @@
   const icons={
     pc:'<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="11" rx="1.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
     android:'<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="7" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 7 6.5 4.5M16 7l1.5-2.5M9 11h.01M15 11h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-    iphone:'<svg viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M10 6h4M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-    tv:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="m9 3 3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    iphone:'<svg viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M10 6h4M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
   };
   const guides={
     pc:{title:"Laptop / PC",description:"Panduan akses melalui browser di laptop atau komputer.",video:"pc.mp4",linkKey:"pc"},
     android:{title:"HP Android",description:"Panduan akses untuk perangkat Android.",video:"android.mp4",linkKey:"hp"},
-    iphone:{title:"iPhone / iPad",description:"Panduan akses untuk iPhone atau iPad.",video:"iphone.mp4",linkKey:"hp"},
-    tv:{title:"Smart TV",description:"Panduan akses melalui Smart TV atau streaming device.",video:"tv.mp4",linkKey:"tv"}
+    iphone:{title:"iPhone / iPad",description:"Panduan akses untuk iPhone atau iPad.",video:"iphone.mp4",linkKey:"hp"}
   };
 
   const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
