@@ -5,9 +5,9 @@ const icons={
   iphone:'<svg viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M10 6h4M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
 };
 const guides={
-  pc:{title:"Laptop / PC",description:"Panduan akses melalui browser di laptop atau komputer.",video:"assets/pc.mp4",linkKey:"pc"},
-  android:{title:"HP Android",description:"Panduan akses untuk perangkat Android.",video:"android.mp4",linkKey:"hp"},
-  iphone:{title:"iPhone / iPad",description:"Panduan akses untuk iPhone atau iPad.",video:"assets/iphone.mp4",linkKey:"hp"}
+  pc:{title:"Laptop / PC",description:"Panduan akses melalui browser di laptop atau komputer.",video:"https://www.youtube.com/embed/zRwTfZQodQM",linkKey:"pc"},
+  android:{title:"HP Android",description:"Panduan akses untuk perangkat Android.",video:"https://www.youtube.com/embed/Q8jhAfIyzQg",linkKey:"hp"},
+  iphone:{title:"iPhone / iPad",description:"Panduan akses untuk iPhone atau iPad.",video:"https://www.youtube.com/embed/kHIG9JPHyQ0",linkKey:"hp"}
 };
 
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
@@ -51,9 +51,9 @@ function openGuide(key){
   if(sessionStorage.getItem("nfClearClicked")!=="1") return;
   const g=guides[key];if(!g)return;activeGuide=key;
   guideTitle.textContent=g.title;guideDeviceLabel.textContent=g.title;guideDescription.textContent=g.description;guideMiniIcon.innerHTML=icons[key];
-  guideVideo.src=g.video;guideVideo.load();homeView.classList.add("hidden");guideView.classList.add("active");updateContinueState();window.scrollTo({top:0,behavior:"smooth"});
+  guideVideo.src=g.video;guideVideo.title=`Video tutorial ${g.title}`;homeView.classList.add("hidden");guideView.classList.add("active");updateContinueState();window.scrollTo({top:0,behavior:"smooth"});
 }
-function closeGuide(){guideVideo.pause();guideVideo.removeAttribute("src");guideVideo.load();activeGuide=null;guideView.classList.remove("active");homeView.classList.remove("hidden")}
+function closeGuide(){guideVideo.src="about:blank";activeGuide=null;guideView.classList.remove("active");homeView.classList.remove("hidden")}
 function updateContinueState(){if(!activeGuide)return;const g=guides[activeGuide],ok=Boolean(links[g.linkKey]);continueButton.disabled=!ok;guideNote.textContent=ok?"Sudah siap. Tekan tombol untuk melanjutkan.":"Link belum tersedia atau masih dimuat."}
 function openDeviceLink(){
   if(!activeGuide)return;const dest=links[guides[activeGuide].linkKey];if(!dest){alert("Link perangkat belum tersedia.");return}
